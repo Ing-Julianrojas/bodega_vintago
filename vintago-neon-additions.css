@@ -1,0 +1,734 @@
+/*
+ * ═══════════════════════════════════════════════════════════════════
+ *  Vintago Bodega — vintago-neon-additions.css
+ *  PEGA al final de vintago-extras.css (o encola como hoja separada)
+ *  ─────────────────────────────────────────────────────────────────
+ *  Cubre:
+ *   FASE 4A — Hero section y strip ticker
+ *   FASE 4B — Carrusel de categorías (tarjetas mejoradas)
+ *   FASE 4C — Selector de cantidad + botón añadir al carrito (neón)
+ *   FASE 4D — Footer con grid estricto y borde neón superior
+ *   FASE 4E — Grids y ajustes generales de simetría
+ * ═══════════════════════════════════════════════════════════════════
+ */
+
+/* ═══════════════════════════════════════════════════════════════════
+   FASE 4A — HERO SECTION
+   ─────────────────────────────────────────────────────────────────
+   Aumenta la altura del hero, define max-width 1280px, añade el
+   strip ticker con sombra neón y mejora la fuerza visual del banner.
+════════════════════════════════════════════════════════════════════ */
+
+/* Contenedor máximo estandarizado para todas las secciones hero */
+.vintago-hero,
+.vintago-hero-wrap,
+.vintago-slide-section,
+.hero-banner,
+[class*="hero"]:not([class*="legal"]) {
+    max-width: 1280px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Hero: altura mínima garantizada y fondo profundo */
+.vintago-hero__slide,
+.swiper-slide,
+.vintago-banner-slide,
+.cat-hero {
+    min-height: clamp(320px, 55vw, 600px) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Overlay oscuro sobre imágenes de fondo para contraste */
+.vintago-hero__slide::after,
+.cat-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        rgba(10,10,15,.82) 0%,
+        rgba(10,10,15,.35) 60%,
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
+/* ── Strip Ticker ──────────────────────────────────────────────── */
+.hero-strip,
+.vintago-ticker,
+[class*="ticker"],
+[class*="strip-track"] {
+    position: relative;
+    overflow: hidden;
+    background: #0d0d16 !important;
+    border-top: 1px solid rgba(0,229,195,.2) !important;
+    border-bottom: 1px solid rgba(0,229,195,.2) !important;
+    padding: 10px 0 !important;
+}
+
+/* Texto y track del ticker */
+.hero-strip-track,
+.vintago-ticker__track,
+[class*="ticker-track"] {
+    display: flex !important;
+    align-items: center !important;
+    gap: 32px !important;
+    white-space: nowrap !important;
+    animation: vintago-ticker-slide 28s linear infinite !important;
+    color: #f0f0f5 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: .04em !important;
+}
+
+/* Iconos de check dentro del ticker */
+.hero-strip-track .check,
+.hero-strip-track [class*="check"],
+.hero-strip-track svg,
+.vintago-ticker__track svg {
+    color: #00e5c3 !important;
+    filter: drop-shadow(0 0 5px rgba(0,229,195,.65)) !important;
+    flex-shrink: 0 !important;
+}
+
+/* Separadores de texto del ticker */
+.hero-strip-track span,
+.vintago-ticker__track span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Pausar en hover */
+.hero-strip:hover .hero-strip-track,
+.vintago-ticker:hover .vintago-ticker__track {
+    animation-play-state: paused !important;
+}
+
+@keyframes vintago-ticker-slide {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Gradiente de fade en los bordes del ticker */
+.hero-strip::before,
+.hero-strip::after,
+.vintago-ticker::before,
+.vintago-ticker::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+}
+.hero-strip::before,
+.vintago-ticker::before {
+    left: 0;
+    background: linear-gradient(to right, #0d0d16, transparent);
+}
+.hero-strip::after,
+.vintago-ticker::after {
+    right: 0;
+    background: linear-gradient(to left, #0d0d16, transparent);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   FASE 4B — CARRUSEL DE CATEGORÍAS (TARJETAS MEJORADAS)
+   ─────────────────────────────────────────────────────────────────
+   Estandariza aspect-ratio, object-fit, tipografía Orbitron/Inter,
+   y el efecto de borde neón al hacer hover.
+════════════════════════════════════════════════════════════════════ */
+
+/* Importar Orbitron (futurista) — solo si aún no está en head */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap');
+
+/* Tiles de categoría — reset y base */
+.vintago-category-tile,
+.cat-card,
+.category-tile {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    border: 1.5px solid #2a2a3a !important;
+    border-radius: 16px !important;
+    background: linear-gradient(145deg, rgba(255,255,255,.065), rgba(255,255,255,.018)) !important;
+    box-shadow: 0 10px 24px rgba(0,0,0,.2) !important;
+    text-decoration: none !important;
+    transition: transform .28s cubic-bezier(.34,1.56,.64,1), border-color .22s, box-shadow .22s !important;
+    flex: 0 0 clamp(200px, 22vw, 250px) !important;
+}
+
+.vintago-category-tile:hover,
+.cat-card:hover,
+.category-tile:hover {
+    border-color: #00e5c3 !important;
+    box-shadow:
+        0 0 0 1px rgba(0,229,195,.35),
+        0 16px 38px rgba(0,229,195,.2),
+        0 4px 12px rgba(0,0,0,.4) !important;
+    transform: translateY(-6px) !important;
+}
+
+/* Imagen de la tarjeta — aspect-ratio estandarizado 4:3 */
+.vintago-category-tile__image,
+.cat-card__image,
+[class*="category-tile"] > span:first-child,
+[class*="category-tile"] > figure {
+    display: grid !important;
+    place-items: center !important;
+    width: 100% !important;
+    aspect-ratio: 4 / 3 !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    flex-shrink: 0 !important;
+}
+
+.vintago-category-tile__image img,
+.cat-card__image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    padding: 8px !important;
+    transition: transform .35s ease !important;
+}
+
+.vintago-category-tile:hover .vintago-category-tile__image img,
+.cat-card:hover .cat-card__image img {
+    transform: scale(1.05) !important;
+}
+
+/* SVG placeholder cuando no hay imagen */
+.vintago-category-tile__image svg {
+    width: 52px !important;
+    height: 52px !important;
+    color: #00e5c3 !important;
+    filter: drop-shadow(0 0 6px rgba(0,229,195,.5)) !important;
+}
+
+/* Título de la tarjeta de categoría — tipografía neón */
+.vintago-category-tile strong,
+.cat-card strong,
+.cat-card__name {
+    display: block !important;
+    padding: 14px 12px !important;
+    color: #f0f0f5 !important;
+    font-family: 'Orbitron', 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: .05em !important;
+    line-height: 1.4 !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    min-height: 54px !important;
+}
+
+/* Tracks del carrusel — sin barra de scroll */
+.vintago-category-carousel__track,
+.cat-grid {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+.vintago-category-carousel__track::-webkit-scrollbar,
+.cat-grid::-webkit-scrollbar { display: none !important; }
+
+/* Botones de control del carrusel */
+.vintago-category-carousel__controls button,
+.cat-carousel-btn {
+    width: 42px !important;
+    height: 42px !important;
+    border: 1.5px solid #2a2a3a !important;
+    border-radius: 50% !important;
+    background: #16161f !important;
+    color: #8888a8 !important;
+    font-size: 18px !important;
+    cursor: pointer !important;
+    transition: border-color .2s, color .2s, box-shadow .2s, transform .15s !important;
+    display: grid !important;
+    place-items: center !important;
+}
+.vintago-category-carousel__controls button:hover,
+.cat-carousel-btn:hover {
+    border-color: #00e5c3 !important;
+    color: #00e5c3 !important;
+    box-shadow: 0 0 10px rgba(0,229,195,.25) !important;
+    transform: translateY(-2px) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   FASE 4C — SELECTOR DE CANTIDAD Y BOTÓN AÑADIR AL CARRITO
+   (aplica a catálogo y producto individual)
+════════════════════════════════════════════════════════════════════ */
+
+/* Input de cantidad WooCommerce — base oscura visible */
+.woocommerce .quantity .qty,
+.vintago-product-purchase .quantity .qty {
+    background: #0a0a0f !important;
+    color: #f0f0f5 !important;
+    border: 1.5px solid rgba(0,229,195,.45) !important;
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    min-width: 60px !important;
+    min-height: 48px !important;
+    -moz-appearance: textfield !important;
+}
+.woocommerce .quantity .qty::-webkit-inner-spin-button,
+.woocommerce .quantity .qty::-webkit-outer-spin-button { -webkit-appearance: none; }
+.woocommerce .quantity .qty:focus {
+    outline: none !important;
+    border-color: #00e5c3 !important;
+    box-shadow: 0 0 0 3px rgba(0,229,195,.14) !important;
+}
+
+/* Botón añadir al carrito — en LISTADO de productos */
+.woocommerce ul.products li.product .add_to_cart_button,
+.vintago-product-card__button {
+    display: block !important;
+    padding: 11px 16px !important;
+    border: 1.5px solid rgba(0,229,195,.45) !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    color: #00e5c3 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    letter-spacing: .03em !important;
+    text-transform: uppercase !important;
+    transition: background .2s, color .2s, border-color .2s, box-shadow .2s !important;
+}
+.woocommerce ul.products li.product .add_to_cart_button:hover,
+.vintago-product-card__button:hover {
+    background: #00e5c3 !important;
+    color: #0a0a0f !important;
+    border-color: #00e5c3 !important;
+    box-shadow: 0 0 14px rgba(0,229,195,.4) !important;
+}
+
+/* Botón añadir al carrito — PRODUCTO INDIVIDUAL */
+.single-product div.product form.cart .single_add_to_cart_button,
+.vintago-product-purchase .button {
+    min-height: 52px !important;
+    padding: 0 30px !important;
+    border: none !important;
+    border-radius: 10px !important;
+    background: #00e5c3 !important;
+    color: #0a0a0f !important;
+    font-family: 'Inter', system-ui, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    letter-spacing: .06em !important;
+    text-transform: uppercase !important;
+    box-shadow:
+        0 0 18px rgba(0,229,195,.4),
+        0 4px 16px rgba(0,0,0,.35) !important;
+    transition: background .2s, box-shadow .2s, transform .15s !important;
+    cursor: pointer !important;
+}
+.single-product div.product form.cart .single_add_to_cart_button:hover,
+.vintago-product-purchase .button:hover {
+    background: #00c9aa !important;
+    box-shadow:
+        0 0 28px rgba(0,229,195,.6),
+        0 6px 22px rgba(0,0,0,.4) !important;
+    transform: translateY(-2px) !important;
+}
+.single-product div.product form.cart .single_add_to_cart_button:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 0 10px rgba(0,229,195,.3) !important;
+}
+
+/* Botones +/- inyectados por JS en single-product.php */
+.vintago-qty-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 42px !important;
+    height: 48px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #00e5c3 !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: background .15s !important;
+    flex-shrink: 0 !important;
+}
+.vintago-qty-btn:hover { background: rgba(0,229,195,.12) !important; }
+
+/* Contenedor del quantity cuando tiene los botones inyectados */
+.vintago-product-purchase .quantity:has(.vintago-qty-btn) {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+    border: 1.5px solid rgba(0,229,195,.5) !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    background: transparent !important;
+}
+.vintago-product-purchase .quantity:has(.vintago-qty-btn) .qty {
+    border: none !important;
+    border-left: 1px solid rgba(0,229,195,.25) !important;
+    border-right: 1px solid rgba(0,229,195,.25) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    width: 54px !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   FASE 4D — FOOTER — grid estricto y borde superior neón
+════════════════════════════════════════════════════════════════════ */
+
+.vintago-global-footer {
+    display: block !important;
+    width: 100% !important;
+    clear: both !important;
+    background: #111118 !important;
+    border-top: 2px solid transparent !important;
+    /* Borde gradiente neón en la parte superior */
+    background-image:
+        linear-gradient(#111118, #111118),
+        linear-gradient(90deg, #00e5c3, #7c5cfc, #00e5c3) !important;
+    background-origin: border-box !important;
+    background-clip: padding-box, border-box !important;
+}
+
+/* Grid de columnas del footer — simétrico */
+.vintago-footer__grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
+    gap: 40px 32px !important;
+    max-width: 1280px !important;
+    margin: 0 auto !important;
+    padding: 60px 28px 48px !important;
+    align-items: start !important;
+}
+
+/* Columna 1 — Marca */
+.vintago-footer__grid > div:first-child {
+    grid-column: span 1 !important;
+}
+
+/* Títulos de sección del footer */
+.vintago-footer__grid h2 {
+    margin: 0 0 18px !important;
+    color: #f0f0f5 !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: .12em !important;
+    text-transform: uppercase !important;
+    /* Línea decorativa neón bajo el título */
+    padding-bottom: 10px !important;
+    border-bottom: 1px solid rgba(0,229,195,.2) !important;
+}
+
+/* Texto de descripción en columna de marca */
+.vintago-footer__grid > div:first-child p {
+    max-width: 280px !important;
+    margin: 16px 0 0 !important;
+    color: #8888a8 !important;
+    font-size: 13px !important;
+    line-height: 1.75 !important;
+}
+
+/* Links del footer */
+.vintago-footer__grid a:not(.vintago-global-header__brand) {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin: 0 0 11px !important;
+    color: #8888a8 !important;
+    font-size: 13.5px !important;
+    line-height: 1.45 !important;
+    text-decoration: none !important;
+    transition: color .18s, padding-left .18s !important;
+}
+.vintago-footer__grid a:not(.vintago-global-header__brand):hover {
+    color: #00e5c3 !important;
+    padding-left: 4px !important;
+}
+
+/* Logo / brand en footer */
+.vintago-footer__grid .vintago-global-header__brand {
+    display: inline-block !important;
+    margin: 0 0 4px !important;
+    color: #f0f0f5 !important;
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    letter-spacing: .04em !important;
+    text-decoration: none !important;
+}
+.vintago-footer__grid .vintago-global-header__brand span {
+    color: #00e5c3 !important;
+    text-shadow: 0 0 8px rgba(0,229,195,.6) !important;
+}
+
+/* Barra inferior del footer */
+.vintago-footer__bottom {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    max-width: 1280px !important;
+    margin: 0 auto !important;
+    padding: 20px 28px !important;
+    border-top: 1px solid #2a2a3a !important;
+    color: #555570 !important;
+    font-size: 12px !important;
+}
+.vintago-footer__bottom a {
+    color: #8888a8 !important;
+    text-decoration: none !important;
+    transition: color .18s !important;
+}
+.vintago-footer__bottom a:hover { color: #00e5c3 !important; }
+
+/* Responsivo: footer */
+@media (max-width: 900px) {
+    .vintago-footer__grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 32px 24px !important;
+        padding: 44px 20px 36px !important;
+    }
+}
+@media (max-width: 560px) {
+    .vintago-footer__grid {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+        padding: 36px 18px 28px !important;
+    }
+    .vintago-footer__bottom {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px !important;
+        padding: 16px 18px !important;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   FASE 4E — GRIDS Y AJUSTES GENERALES DE SIMETRÍA
+════════════════════════════════════════════════════════════════════ */
+
+/* Contenedor máximo global */
+.vintago-shop__inner,
+.vintago-product-page__inner,
+.vintago-footer__grid {
+    max-width: 1280px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Grid de productos — 3 columnas fijas, gap uniforme */
+.vintago-product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+    align-items: stretch !important;
+}
+
+/* Tarjetas de producto — altura uniforme */
+.vintago-product-card {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    border: 1.5px solid #2a2a3a !important;
+    border-radius: 16px !important;
+    background: #16161f !important;
+    transition: border-color .22s, box-shadow .22s, transform .22s !important;
+    overflow: hidden !important;
+}
+.vintago-product-card:hover {
+    border-color: rgba(0,229,195,.5) !important;
+    box-shadow: 0 8px 30px rgba(0,229,195,.12), 0 2px 8px rgba(0,0,0,.3) !important;
+    transform: translateY(-3px) !important;
+}
+
+/* Badge de conteo en el header de categoría */
+.vintago-count-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 5px 16px !important;
+    border: 1.5px solid rgba(0,229,195,.4) !important;
+    border-radius: 999px !important;
+    background: rgba(0,229,195,.08) !important;
+    color: #00e5c3 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    letter-spacing: .02em !important;
+    vertical-align: middle !important;
+    /* Glow sutil */
+    box-shadow: 0 0 10px rgba(0,229,195,.15) !important;
+}
+
+/* Buscador de subcategorías */
+.vintago-cat-search {
+    position: relative;
+    margin: 0 0 20px;
+}
+.vintago-cat-search__input {
+    display: block;
+    width: 100%;
+    padding: 13px 48px 13px 20px;
+    border: 1.5px solid rgba(0,229,195,.3);
+    border-radius: 12px;
+    background: rgba(0,229,195,.04);
+    color: #f0f0f5;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    box-sizing: border-box;
+}
+.vintago-cat-search__input::placeholder { color: #44445a; }
+.vintago-cat-search__input:focus {
+    border-color: #00e5c3;
+    box-shadow: 0 0 0 3px rgba(0,229,195,.12);
+}
+.vintago-cat-search__icon {
+    position: absolute;
+    top: 50%; right: 16px;
+    transform: translateY(-50%);
+    color: #00e5c3;
+    pointer-events: none;
+}
+.vintago-cat-search__empty {
+    display: none;
+    padding: 18px 0;
+    color: #8888a8;
+    font-size: 14px;
+    text-align: center;
+}
+.vintago-category-tile.is-hidden { display: none !important; }
+
+/* Eyebrow / label de sección */
+.vintago-eyebrow,
+.vintago-product-kicker {
+    display: block;
+    margin: 0 0 10px;
+    color: #00e5c3;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+/* Paginación */
+.vintago-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+}
+.vintago-page-btn {
+    display: grid;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    place-items: center;
+    border: 1.5px solid #2a2a3a;
+    border-radius: 8px;
+    background: #16161f;
+    color: #8888a8;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color .18s, color .18s, background .18s, box-shadow .18s;
+}
+.vintago-page-btn:hover {
+    border-color: #00e5c3;
+    color: #00e5c3;
+    box-shadow: 0 0 8px rgba(0,229,195,.2);
+}
+.vintago-page-btn.is-active {
+    border-color: #00e5c3 !important;
+    background: rgba(0,229,195,.12) !important;
+    color: #00e5c3 !important;
+    box-shadow: 0 0 10px rgba(0,229,195,.25) !important;
+}
+.vintago-page-prev,
+.vintago-page-next { border-radius: 50%; min-width: 40px; padding: 0; }
+
+/* Breadcrumb */
+.vintago-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    color: #8888a8;
+    font-size: 13px;
+}
+.vintago-breadcrumb a { color: #8888a8; text-decoration: none; transition: color .18s; }
+.vintago-breadcrumb a:hover { color: #00e5c3; }
+.vintago-breadcrumb span { color: #44445a; }
+.vintago-breadcrumb span:last-child { color: #f0f0f5; }
+
+/* Estado vacío */
+.vintago-empty-state {
+    padding: 80px 20px;
+    text-align: center;
+    color: #8888a8;
+}
+.vintago-empty-state__icon {
+    display: grid;
+    width: 80px;
+    height: 80px;
+    place-items: center;
+    margin: 0 auto 24px;
+    border: 1px solid #2a2a3a;
+    border-radius: 50%;
+    color: #444460;
+}
+.vintago-empty-state h2 { color: #f0f0f5; margin: 0 0 10px; }
+.vintago-btn {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 12px 28px;
+    border: 1.5px solid #00e5c3;
+    border-radius: 10px;
+    background: transparent;
+    color: #00e5c3;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: .04em;
+    transition: background .2s, color .2s, box-shadow .2s;
+}
+.vintago-btn:hover {
+    background: #00e5c3;
+    color: #0a0a0f;
+    box-shadow: 0 0 18px rgba(0,229,195,.35);
+}
+
+/* ─── Responsive global ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .vintago-product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+@media (max-width: 640px) {
+    .vintago-product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+    }
+    .vintago-category-tile {
+        flex: 0 0 210px !important;
+    }
+}
+@media (max-width: 440px) {
+    .vintago-product-grid {
+        grid-template-columns: 1fr !important;
+    }
+}

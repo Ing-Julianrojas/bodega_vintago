@@ -1,0 +1,8 @@
+# Normaliza los finales de línea (el proyecto mezcla CRLF y LF)
+* text=auto eol=lf
+
+# Archivos binarios: no tocar
+*.png  binary
+*.jpg  binary
+*.webp binary
+*.ico  binary

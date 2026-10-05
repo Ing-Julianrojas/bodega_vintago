@@ -1,0 +1,42 @@
+# --- Secretos y configuración de WordPress (NUNCA subir) ---
+.env
+.env.*
+wp-config.php
+wp-config-*.php
+*.pem
+*.key
+
+# --- Datos y respaldos ---
+*.sql
+*.sql.gz
+*.zip
+*.tar
+*.tar.gz
+*.bak
+*.backup
+*.orig
+
+# --- Contenido de WordPress que no es del tema ---
+wp-content/
+uploads/
+upgrade/
+cache/
+
+# --- Respaldo de Child Theme Configurator (ya no se necesita) ---
+style.ctcbackup.css
+
+# --- Dependencias y herramientas ---
+node_modules/
+vendor/
+npm-debug.log*
+*.log
+
+# --- Sistema operativo y editores ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*~
